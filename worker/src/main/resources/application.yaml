@@ -1,0 +1,5 @@
+spring:
+  application:
+    name: image-processor
+
+queue-name: image-processor-queue

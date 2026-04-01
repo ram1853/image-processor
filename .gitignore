@@ -1,9 +1,9 @@
 # Maven build output
-/target/
+**/target/
 
 # IntelliJ IDEA
-.idea/
-*.iml
+**.idea/
+**.iml
 
 # macOS
 .DS_Store

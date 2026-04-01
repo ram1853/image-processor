@@ -1,15 +1,22 @@
 #!/bin/zsh
 
+if [[ "$1" == "-h" || "$1" == "--help" ]]; then
+    echo "Usage: $0 userName fileName filePath"
+    echo "Description: This script generates a s3 pre-signed url & uses that url to upload a jpg file"
+    echo "Example: ./upload.sh ram1853 dog.jpg /Users/bob/Downloads/dog.jpg"
+    exit 0
+fi
+
 userName=$1
 fileName=$2
-absoluteFilePath=$3
+filePath=$3
 
-URL=$(curl -s -H "Content-Type: application/json" -d '{"userName": "'$userName'", "fileName": "'$fileName'"}' https://2z1je3tqk4.execute-api.ap-south-1.amazonaws.com/dev/upload-url | jq -r '.url')
+URL=$(curl -s -H "Content-Type: application/json" -d '{"userName": "'$userName'", "fileName": "'$fileName'"}' https://bwbexzc6w0.execute-api.ap-south-1.amazonaws.com/dev/upload-url | jq -r '.url')
 
 echo "S3 Presigned URL:"
 echo $URL
 
-uploadStatus=$(curl -s -o /dev/null -w "%{http_code}" -H "Content-Type: image/jpg" -T $absoluteFilePath "$URL")
+uploadStatus=$(curl -s -o /dev/null -w "%{http_code}" -H "Content-Type: image/jpg" -T $filePath "$URL")
 
 if [ "$uploadStatus" -eq 200 ]; then
     echo "Upload successful"
