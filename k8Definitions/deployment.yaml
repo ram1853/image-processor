@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: image-processor-deployment
+  labels:
+    env: pre-prod
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      name: image-processor
+  template:
+    metadata:
+      name: image-processor-pod
+      labels:
+        name: image-processor
+    spec:
+      serviceAccountName: image-processor-sa
+      containers:
+        - name: image-processor
+          image: 545009866715.dkr.ecr.ap-south-1.amazonaws.com/image-processor:1.0.9
