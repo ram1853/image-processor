@@ -1,4 +1,4 @@
-#!/bin/zsh
+#!/bin/bash
 
 ecrRepository=$1
 imageTag=$2
