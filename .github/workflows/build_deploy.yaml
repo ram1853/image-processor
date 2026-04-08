@@ -25,9 +25,10 @@ jobs:
         uses: aws-actions/amazon-ecr-login@v2
       
       - name: Build and tag Docker image
+        working-directory: worker
         run: |
-          echo "$PWD"
-          cd worker
+          pwd
+          ls -la
           chmod +x build-docker-image.sh
           ./build-docker-image.sh $ECR_REPOSITORY $IMAGE_TAG
           docker tag $ECR_REPOSITORY:$IMAGE_TAG ${{ steps.login-ecr.outputs.registry }}/$ECR_REPOSITORY:$IMAGE_TAG
