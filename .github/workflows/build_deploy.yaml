@@ -48,6 +48,9 @@ jobs:
       - name: Update kubeconfig context
         run: aws eks update-kubeconfig --region $AWS_REGION --name $EKS_CLUSTER
       
+      - name: Update k8 deployment with image tag
+        run: sed -i "s|IMAGE_TAG|$IMAGE_TAG|g" k8Definitions/deployment.yaml
+      
       - name: Create ServiceAccount and Deployment
         working-directory: k8Definitions
         run: |
