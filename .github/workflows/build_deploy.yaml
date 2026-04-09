@@ -54,8 +54,8 @@ jobs:
       - name: Create ServiceAccount and Deployment
         working-directory: k8Definitions
         run: |
-          kubectl create -f service-account.yaml
-          kubectl create -f deployment.yaml
+          kubectl apply -f service-account.yaml
+          kubectl apply -f deployment.yaml
       
       - name: Sleep for 15 seconds
         run: sleep 15s
