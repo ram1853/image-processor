@@ -13,7 +13,7 @@ jobs:
       AWS_SECRET_ACCESS_KEY: ${{secrets.AWS_SECRET_ACCESS_KEY}}
       AWS_REGION: ap-south-1
       ECR_REPOSITORY: image-processor
-      EKS_CLUSTER: image-processor
+      EKS_CLUSTER: image-processor-cluster
 
     steps:
       - name: Checkout code
