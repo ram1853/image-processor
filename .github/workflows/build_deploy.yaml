@@ -13,6 +13,7 @@ jobs:
       AWS_SECRET_ACCESS_KEY: ${{secrets.AWS_SECRET_ACCESS_KEY}}
       AWS_REGION: ap-south-1
       ECR_REPOSITORY: image-processor
+      EKS_CLUSTER: image-processor
 
     steps:
       - name: Checkout code
@@ -43,5 +44,21 @@ jobs:
       - name: Push Docker image to ECR
         run: |
           docker push ${{ steps.login-ecr.outputs.registry }}/$ECR_REPOSITORY:$IMAGE_TAG
+      
+      - name: Update kubeconfig context
+        run: aws eks update-kubeconfig --region $AWS_REGION --name $EKS_CLUSTER
+      
+      - name: Create ServiceAccount and Deployment
+        working-directory: k8Definitions
+        run: |
+          kubectl create -f service-account.yaml
+          kubectl create -f deployment.yaml
+      
+      - name: Sleep for 15 seconds
+        run: sleep 15s
+        shell: bash
+
+      - name: Output worker state
+        run: kubectl get pods
       
      
